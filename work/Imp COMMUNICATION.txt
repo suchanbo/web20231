@@ -1,0 +1,155 @@
+GOUTAM, (7th Oct):
+
+[12:11] Manimaran, Goutham
+You can use the subject level GT given in our data path to find the placenta location, FP, etc
+
+[12:12] Manimaran, Goutham
+As a starting step, you can find out the distribution of current test set only
+
+[12:12] Manimaran, Goutham
+Let me know if you have time
+
+[12:13] Bose, Rapolu Subhash Chandra
+I will get back to u again
+
+GOUTAM MAIL,(7TH):
+Hi Subhendu,
+
+Thanks for checking out the evaluation plan for MVP and doing your magic on the slides!
+
+For the test cohort, I have kept only GA in mind and not the other parameters. 
+I shall check out the current distribution of the other parameters and change as necessary. 
+As for Oligo and Polyhydramnios, Only one case has been found by Anu so far in the subject level GT, but we can find more with our algorithm itself and have it verified. 
+I plan to keep @Bose, Rapolu Subhash Chandra actively involved in the process, maybe even let him take lead on this as the clinical team is not currently available and not sure if we can finish the process by this month end.
+
+As for Placenta,
+I have modified the current annotations using a rule based approach. It is definitely not perfect in some cases, but seems okay overall. It is currently being trained with YOLO and we’ll get a better idea soon. 
+If this rule-based approach works well even during testing, we can convert this unified approach into its respective classes (anterior, posterior, lateral).
+
+Thanks,
+Goutham
+
+SUBENDU MAIL,(7TH):
+
+Dear @Manimaran, Goutham,
+
+On MVP: 
+
+Let's take this opportunity for preparing a test data cohort for executing your evaluation work for MVP. Please refer to my previous mail on your evaluation strategy for MVP. 
+Rewriting: 
+-	Let's come up with a logical test data cohort with a significant number, having a glimpse of natural demographics with a variety like Oligohydramnios, Normal, and Polyhydramnios. 
+-	Some fair distribution on respective GA, presence of placenta (posterior/anterior), Fetal orientation (face up/down, if possible), and devices (Voluson, Butterfly, etc.) will be good to have. Let's work with the Clinical team to form a logical test dataset.
+
+Actions: 
+-	Please pick the dataset carefully (maybe 30 unseen subjects to target?).
+-	@Bose, Rapolu Subhash Chandra may help in this task. Please suggest. 
+
+On Placenta: 
+
+We have to scale up the analysis on more data and test between clustered annotations and unified annotations. That might be a good expectation with this annotation task. In your previous experiment, you have already concluded that;
+
+	Unified 	Strcutured (Anterior/posterior/lateral)	Clustered (multiple BB)
+Experiment Outcome	Best	Better	Worst
+Ease of annotations	easy to handle but might have more background than the clustered one	critical to take decisions among each label 	cumbersome
+Other features	a possibility is there to decompose unified into structured*	Might help in additional features based on placental position directly 	Possibility of including the least background in BB
+
+Actions: 
+-	Please find out the right (maybe +15 subjects to target?) dataset to execute/scale up this analysis as you have the annotation history of all 80+ annotations. Good to have a check on the data variabilities (GA/placental location/AF, etc.) 
+-	Probably your suggestion of auto-generating unified BB from clustered BB might be a quick solution for single placenta levels (either Anterior/posterior/lateral). 
+-	For cases with multiple combinations, we have to redo the annotations. Although based on the elongation direction of BB and position in fan angle we may try for automation*. Your thought. 
+-	Let me know how I can be of any help in this task. 
+
+But before finalizing, please review. 
+
+Regards,
+Subhendu
+
+GOUTAM MAIL(3RD OCT):
+
+Hey Subhash, 
+
+As discussed, I have uploaded a couple of sample subjects for you to try out the postprocessing function yourself. You can access it   here
+
+It has two directories : 
+1.	YOLO : It contains the predictions from the model in text files arranged in the order of the sweeps. 
+2.	GT : It contains both the images and annotations, which follows the same directory structure as the one uploaded in server or this path : \\glbmiaas01cf021\BMGF\RESULTS\Famili_YOLO_Output_for_Cambridge\ClinicalTeam_FrameLevel_GT
+
+It also contains the PreProcess.py file, all you have to do it run this. It will create a folder called Output which will contain two things:
+1.	A folder called Images for the visualization
+2.	A folder/text file called Numbers which is the sweep level MVP for each subject (GT and Prediction)
+
+Thanks,
+Goutham
+
+GOUTAM MAIL(3RD OCT):
+
+
+Hi Subhash,
+
+Let’s have utilize this week to give a proper KT for the MVP clinical feature. We can have regular calls to reinforce the concept and code for how we’re tackling this problem. We both will also actively participate in the evaluation of this feature. 
+\
+A high level overview of everything related to MVP can be found   here along with the evaluation plan. 
+We can already discussed some of this today, you can go over the rest as well for our next call. 
+
+Since you’re pretty new to YOLO, you can go over this nice tutorial as well as it is needed for MVP and familiarize yourself with the output format which will be needed for post-processing and obtaining the final output. 
+
+You can Visualize YOLO bounding box with this code.
+
+Let me know if you require anything else. We can go over post-processing next. 
+
+Thanks,
+Goutham
+
+GOUTAM (22ND AUG):
+
+Hi Subhash,
+ 
+We can use this hour for a KT on CVAT - both code level for automation purposes as well as data loading pipeline
+ 
+Thanks,
+Goutham
+
+GOUTAM (8TH SEPT):
+
+Hi,
+
+To view annotations done on CVAT, you can check it out using this link - http://161.85.25.85:8080/projects/39?page=1
+
+Username : bmgf_cambridge
+Password : #welcome123
+
+There are currently 3 studies uploaded there with annotations. Will upload more if needed. 
+Let me know if you face any difficulties accessing CVAT.
+
+Thanks,
+Goutham
+
+GOUTAM (7TH SEPT):
+
+Hi,
+
+The annotated data are stored at this path : /mnt/hd1/BMGF/Famli_ARC_DATA/main_test_Temporary_Modified in the .85 server.
+Please have a look at the structure and format. 
+
+Separate files/folders are created each for Bounding Box, Ellipse, Polyline, Oriented Bounding Box. 
+1.	Bounding Boxes are stored in the YOLO format except class_id is replace with class_name
+2.	Ellipse are stored in one .txt file as : image_name class_name center_x center_y radius_x radius_y angle
+3.	Polyline are stored in one .txt file as : image_name class_name x1 y1 x2 y2 
+4.	OBB are also stored in one .txt file as : image_name class_name x_top_left y_top_left x_bottom_right y_bottom_right angle
+
+Video level annotations like Discard Sweep, Low IQ and image level classification are yet to be done. 
+
+Let me know if this formatting is fine or any changes are required for easier data preparation and training. 
+
+Thanks,
+Goutham
+
+
+
+
+
+
+
+
+
+
